@@ -1,9 +1,16 @@
 from vpython import *
 
-first_Sphere = sphere(radians = 0.1,pos=vec(-5,-5,0), color=color.blue,)
-second_Sphere = sphere(radians = 0.1,pos=vec(5,5,0), color = color.red)
+first_Sphere = sphere(radians = 0.1,pos=vec(-10,0,0), color=color.blue)
+second_Sphere = sphere(radians = 0.1,pos=vec(0,0,0), color = color.red)
 
-mass_first = 2*10**10
+pointVectorList = []
+for i in range(40):
+    pointVectorList.append(vec(-20 + i, 0, 0))
+for i in range(40):
+    pointVectorList.append(vec(0,-20+i,0))
+grid = points(pos=pointVectorList, color=color.white,radius=1)
+
+mass_first = 2*10**5
 mass_second = 2*10**10
 
 dt = 1
@@ -28,8 +35,8 @@ def direction(origin, object):
 
     return hat(object.pos - origin.pos)
 
-first_Velocity = vec(0,0.25,0)
-second_Velocity = vec(0,-0.25,0)
+first_Velocity = vec(0,0.4,0)
+second_Velocity = vec(0,0,0)
 
 while True:
     rate(60)
