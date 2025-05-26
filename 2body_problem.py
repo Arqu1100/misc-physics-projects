@@ -24,25 +24,20 @@ def pos_Update(object, velocity):
     
     return object.pos + velocity * dt
 
-first_Velocity = vec(0,0.2,0)
-second_Velocity = vec(0,-0.2,0)
+def direction(origin, object):
 
-print(gravityAcclMag(mass_first, first_Sphere, second_Sphere))
+    return hat(object.pos - origin.pos)
+
+first_Velocity = vec(0,0.25,0)
+second_Velocity = vec(0,-0.25,0)
 
 while True:
     rate(60)
-    sphere2_to_sphere1 = hat(first_Sphere.pos - second_Sphere.pos)
-    sphere1_to_sphere2 = hat(second_Sphere.pos - first_Sphere.pos)
+    sphere2_to_sphere1 = direction(second_Sphere, first_Sphere)
+    sphere1_to_sphere2 = direction(first_Sphere, second_Sphere)
 
-    first_Velocity = first_Velocity + gravityAcclMag(mass_second, first_Sphere, second_Sphere) * dt * sphere1_to_sphere2
-    second_Velocity = second_Velocity + gravityAcclMag(mass_first, first_Sphere, second_Sphere) * dt * sphere2_to_sphere1
-
-    print(first_Velocity, second_Velocity)
+    first_Velocity = velocity_Update(first_Velocity, gravityAcclMag(mass_second, first_Sphere, second_Sphere), sphere1_to_sphere2)
+    second_Velocity = velocity_Update(second_Velocity, gravityAcclMag(mass_first, first_Sphere, second_Sphere), sphere2_to_sphere1)
 
     first_Sphere.pos = pos_Update(first_Sphere, first_Velocity)
     second_Sphere.pos = pos_Update(second_Sphere, second_Velocity)
-
-    """
-    first_Sphere.pos = first_Sphere.pos + 1/2* (gravityAcclMag(mass_second, first_Sphere, second_Sphere)) * dt**2 * sphere1_tosphere2
-    second_Sphere.pos = second_Sphere.pos + 1/2 * (gravityAcclMag(mass_first, first_Sphere, second_Sphere)) * dt**2 * sphere2_to_sphere1
-    """
